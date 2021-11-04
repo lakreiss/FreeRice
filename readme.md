@@ -1,2 +1,2 @@
-Unfortunately, FreeRice has banned Selenium-controlled Chrome instances. FreeRiceBot
-is dead.
+# FreeRice
+Web bot that earns rice for the World Food Programme
