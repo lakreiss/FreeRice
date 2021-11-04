@@ -5,40 +5,49 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import NoSuchWindowException
 from time import sleep
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 class FreeRiceBot():
     def __init__(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(ChromeDriverManager(version="95.0.4638.54").install())
+        # self.driver = webdriver.Chrome()
+        self.driver.set_window_size(1024, 600)
+        self.driver.maximize_window()
+
 
     def login(self):
         self.driver.get('https://freerice.com')
-        sleep(2)
 
+        # close popup
+        self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[1]/button').click()
+
+        sleep(2)
         #toggle menu
         self.driver.find_element_by_class_name("toolbar__menu-toggle-icon").click()
-        sleep(0.5)
 
+        sleep(0.5)
         #toggle login
         self.driver.find_element_by_xpath('//*[@id="root"]/nav/div/div[1]/div/div[2]/a[1]').click()
-        sleep(0.5)
 
+        sleep(0.5)
         #enter username and password
         self.driver.find_element_by_xpath('//*[@id="login-username"]').send_keys("lakreiss")
-        self.driver.find_element_by_xpath('//*[@id="login-password"]').send_keys("***************")
+        self.driver.find_element_by_xpath('//*[@id="login-password"]').send_keys("dqwuqwod123bbsd1B")
 
         #log in
         self.driver.find_element_by_xpath('//*[@id="root"]/section/div/div[1]/div/div[2]/div/div/button').click()
 
     def get_rice(self):
+
+        sleep(0.5)
         #toggles menu
         self.driver.find_element_by_class_name("toolbar__menu-toggle-icon").click()
-        sleep(0.5)
 
+        sleep(0.5)
         #toggles category
         self.driver.find_element_by_xpath('//*[@id="root"]/nav/div/nav/ul/li[2]/a').click()
-        sleep(0.5)
 
+        sleep(0.5)
         #toggles math multiplication
         self.driver.find_element_by_xpath('//*[@id="root"]/section/div/div[1]/div/div[2]/div/div/div[6]/div[1]/div[1]').click()
 
@@ -47,7 +56,8 @@ class FreeRiceBot():
     def infinite_loop(self):
         while(True):
             try:
-                sleep(.1)
+                # sleep(1.5)
+                sleep(0.5)
                 #accesses and solves the math problem
                 problem = self.driver.find_element_by_xpath('//*[@id="root"]/section/div/div[1]/div/div/div[4]/div[1]/div/div/div/div/div/div[1]')
                 problem_text = problem.get_attribute('innerHTML')
@@ -96,6 +106,15 @@ class FreeRiceBot():
             # except NoSuchWindowException: #this one might be good to not catch
             #     print("NoSuchWindowException, trying again")
 
+# def run_program_forever():
+#     try:
+#         bot = FreeRiceBot()
+#         bot.login()
+#         bot.get_rice()
+#     except Error:
+#         run_program_forever()
+#
+# run_program_forever()
 
 bot = FreeRiceBot()
 bot.login()
